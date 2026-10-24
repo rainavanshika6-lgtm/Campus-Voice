@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CampusVoice | Student Feedback</title>
+<style>
+:root{--navy:#172554;--blue:#3157d5;--pale:#f4f7ff;--ink:#172033;--muted:#667085;--line:#e5eaf4;--white:#fff;--green:#087443;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--pale);color:var(--ink)}
+header{background:linear-gradient(120deg,#172554,#3157d5);color:white;padding:25px max(5vw,20px)}
+header .wrap{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-size:24px;font-weight:800;letter-spacing:.2px}.tag{opacity:.86;margin-top:5px;font-size:14px}
+nav{display:flex;gap:8px;flex-wrap:wrap}button,.tab{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
+nav button{background:#ffffff20;color:#fff;border:1px solid #ffffff55}nav button.active{background:white;color:var(--navy)}
+main{max-width:1100px;margin:28px auto;padding:0 18px 40px}.hero{margin-bottom:22px}.hero h1{margin:0 0 8px;font-size:clamp(25px,4vw,36px)}.hero p{color:var(--muted);margin:0;line-height:1.5}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:23px;box-shadow:0 7px 22px #1e3a8a0a}.card h2{margin:0 0 18px;font-size:20px}
+label{display:block;font-size:14px;font-weight:700;margin:14px 0 7px}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d7deeb;border-radius:10px;background:white;font:inherit;color:var(--ink)}textarea{min-height:105px;resize:vertical}.primary{background:var(--blue);color:white;width:100%;margin-top:18px}.secondary{background:#edf1ff;color:var(--navy)}.note{font-size:12px;color:var(--muted);line-height:1.5}.status{margin-top:14px;padding:12px;border-radius:10px;display:none;line-height:1.45}.status.ok{display:block;background:#ecfdf3;color:var(--green)}.status.err{display:block;background:#fff1f0;color:var(--red)}
+.feature{display:flex;gap:12px;margin:18px 0}.bubble{width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:#edf1ff;display:grid;place-items:center;font-size:20px}.feature strong{display:block;margin-bottom:4px}.feature span{font-size:13px;color:var(--muted);line-height:1.45}
+.hidden{display:none!important}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.metric{padding:17px;background:#f7f9ff;border:1px solid var(--line);border-radius:13px}.metric span{font-size:12px;color:var(--muted)}.metric strong{display:block;font-size:25px;margin-top:7px}
+.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f7f9ff}.barrow{margin:12px 0}.barlabel{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.bar{height:10px;border-radius:99px;background:#e8edfa;overflow:hidden}.bar i{display:block;height:100%;background:var(--blue);border-radius:99px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div><div class="brand">🎓 CampusVoice</div><div class="tag">Student Feedback Management System</div></div><nav><button id="studentTab" class="active" onclick="showTab('student')">Submit feedback</button><button id="adminTab" onclick="showTab('admin')">Admin dashboard</button></nav></div></header>
+<main>
+<section id="studentView">
+<div class="hero"><h1>Your feedback helps us improve.</h1><p>Share your experience with a course or faculty member. Please keep comments respectful and constructive.</p></div>
+<div class="grid">
+<div class="card"><h2>Feedback form</h2>
+<form id="feedbackForm">
+<label for="studentId">Student ID</label><input id="studentId" maxlength="40" required placeholder="e.g. 24BKT0016">
+<label for="studentName">Student name (optional)</label><input id="studentName" maxlength="80" placeholder="Your name">
+<label for="course">Course / subject</label><select id="course" required><option value="">Choose a subject</option><option>Data Structures</option><option>Database Management Systems</option><option>Cloud Computing</option><option>Compiler Design</option><option>Computer Networks</option><option>Other</option></select>
+<label for="faculty">Faculty name</label><input id="faculty" maxlength="100" required placeholder="Faculty name">
+<label for="rating">Overall rating</label><select id="rating" required><option value="">Select rating</option><option value="5">5 - Excellent</option><option value="4">4 - Very good</option><option value="3">3 - Good</option><option value="2">2 - Needs improvement</option><option value="1">1 - Poor</option></select>
+<label for="comments">Comments / suggestions</label><textarea id="comments" maxlength="1500" required placeholder="What worked well? What could be improved?"></textarea>
+<button class="primary" type="submit" id="submitBtn">Submit feedback securely</button>
+<div id="formStatus" class="status" role="status"></div>
+<p class="note">Only submit feedback you are comfortable sharing. This demo does not promise anonymity: your student ID is stored with the record.</p>
+</form></div>
+<aside class="card"><h2>How it works</h2>
+<div class="feature"><div class="bubble">☁️</div><div><strong>Serverless backend</strong><span>AWS Lambda processes each request without managing a server.</span></div></div>
+<div class="feature"><div class="bubble">🗃️</div><div><strong>Cloud database</strong><span>Amazon DynamoDB stores feedback records for later review.</span></div></div>
+<div class="feature"><div class="bubble">📊</div><div><strong>Useful insights</strong><span>The admin view summarizes ratings and course feedback.</span></div></div>
+<div class="feature"><div class="bubble">🔒</div><div><strong>Controlled admin access</strong><span>The dashboard requires a token configured in the backend.</span></div></div>
+<div class="note">Before production use, your institution should define privacy, retention, access and authentication policies.</div>
+</aside></div></section>
+<section id="adminView" class="hidden">
+<div class="hero"><h1>Feedback overview</h1><p>Admin-only summary of submissions received by the backend.</p></div>
+<div class="card" style="margin-bottom:18px"><h2>Connect to your AWS backend</h2><label for="apiUrl">API Gateway base URL</label><input id="apiUrl" placeholder="https://xxxxxxxx.execute-api.region.amazonaws.com"><label for="adminToken">Admin token</label><input id="adminToken" type="password" placeholder="Token configured in Lambda environment"><button class="primary" onclick="loadDashboard()">Load dashboard</button><div id="adminStatus" class="status"></div><p class="note">For a classroom demo only, the token is entered by the admin. For real deployment, use a proper identity provider such as Amazon Cognito and enforce authorization server-side.</p></div>
+<div id="dashboardData" class="hidden"><div class="metrics"><div class="metric"><span>Total feedback</span><strong id="totalMetric">0</strong></div><div class="metric"><span>Average rating</span><strong id="avgMetric">0.0 / 5</strong></div><div class="metric"><span>Courses reviewed</span><strong id="courseMetric">0</strong></div></div><div class="grid"><div class="card"><h2>Average rating by course</h2><div id="courseBars"></div></div><div class="card"><h2>Rating distribution</h2><div id="ratingBars"></div></div></div><div class="card" style="margin-top:20px"><h2>Recent feedback</h2><div class="tablewrap"><table><thead><tr><th>Date</th><th>Course</th><th>Faculty</th><th>Rating</th><th>Comments</th></tr></thead><tbody id="feedbackRows"></tbody></table></div></div></div>
+</section>
+</main><footer>CampusVoice · Serverless Student Feedback Management System · AWS Academy project demo</footer>
+<script>
+function showTab(tab){document.getElementById('studentView').classList.toggle('hidden',tab!=='student');document.getElementById('adminView').classList.toggle('hidden',tab!=='admin');document.getElementById('studentTab').classList.toggle('active',tab==='student');document.getElementById('adminTab').classList.toggle('active',tab==='admin')}
+function setStatus(id,msg,ok){const el=document.getElementById(id);el.textContent=msg;el.className='status '+(ok?'ok':'err')}
+function apiBase(){return document.getElementById('apiUrl').value.trim().replace(/\/+$/,'')}
+document.getElementById('feedbackForm').addEventListener('submit',async e=>{e.preventDefault();const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Submitting…';const payload={student_id:document.getElementById('studentId').value.trim(),student_name:document.getElementById('studentName').value.trim(),course:document.getElementById('course').value,faculty:document.getElementById('faculty').value.trim(),rating:Number(document.getElementById('rating').value),comments:document.getElementById('comments').value.trim()};try{const url=apiBase();if(!url)throw new Error('Please enter the API Gateway URL in the Admin dashboard connection area first, then return to submit.');const r=await fetch(url+'/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.message||data.error||('Request failed ('+r.status+'). Check API URL and CORS settings.'));setStatus('formStatus','Thank you! Your feedback was saved successfully. Reference: '+(data.feedback_id||'submitted'),true);e.target.reset()}catch(err){setStatus('formStatus',err.message+' If the API is not deployed yet, this is expected.',false)}finally{btn.disabled=false;btn.textContent='Submit feedback securely'}});
+async function loadDashboard(){const url=apiBase(),token=document.getElementById('adminToken').value;try{if(!url)throw new Error('Enter the API Gateway base URL.');if(!token)throw new Error('Enter the admin token configured in Lambda.');const r=await fetch(url+'/admin/feedback',{headers:{'x-admin-token':token}});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.message||data.error||('Request failed ('+r.status+').'));renderDashboard(data.feedback||[]);document.getElementById('dashboardData').classList.remove('hidden');setStatus('adminStatus','Dashboard loaded.',true)}catch(err){document.getElementById('dashboardData').classList.add('hidden');setStatus('adminStatus',err.message,false)}}
+function renderDashboard(items){const n=items.length,avg=n?items.reduce((s,x)=>s+Number(x.rating||0),0)/n:0;document.getElementById('totalMetric').textContent=n;document.getElementById('avgMetric').textContent=avg.toFixed(1)+' / 5';const courses=[...new Set(items.map(x=>x.course).filter(Boolean))];document.getElementById('courseMetric').textContent=courses.length;function bars(target,groups,max){const el=document.getElementById(target);el.innerHTML='';const entries=Object.entries(groups);if(!entries.length){el.textContent='No feedback data yet.';return}entries.forEach(([label,val])=>{const row=document.createElement('div');row.className='barrow';const top=document.createElement('div');top.className='barlabel';const l=document.createElement('span');l.textContent=label;const v=document.createElement('b');v.textContent=Number(val).toFixed(target==='courseBars'?1:0);top.append(l,v);const bar=document.createElement('div');bar.className='bar';const fill=document.createElement('i');fill.style.width=Math.max(0,Math.min(100,Number(val)/max*100))+'%';bar.append(fill);row.append(top,bar);el.append(row)})}
+const courseAvg={};courses.forEach(c=>{const a=items.filter(x=>x.course===c);courseAvg[c]=a.reduce((s,x)=>s+Number(x.rating||0),0)/a.length});bars('courseBars',courseAvg,5);const dist={};for(let i=1;i<=5;i++)dist[i+' star'+(i===1?'':'s')]=items.filter(x=>Number(x.rating)===i).length;bars('ratingBars',dist,Math.max(1,...Object.values(dist)));const tbody=document.getElementById('feedbackRows');tbody.innerHTML='';items.slice().sort((a,b)=>(b.created_at||'').localeCompare(a.created_at||'')).slice(0,100).forEach(x=>{const tr=document.createElement('tr');[x.created_at?new Date(x.created_at).toLocaleString():'—',x.course,x.faculty,x.rating,x.comments].forEach(val=>{const td=document.createElement('td');td.textContent=val==null?'':String(val);tr.append(td)});tbody.append(tr)});if(!tbody.children.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=5;td.textContent='No feedback submitted yet.';tr.append(td);tbody.append(tr)}}
+</script></body></html>
